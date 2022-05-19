@@ -24,6 +24,15 @@
         投稿者名：<span th:text="${article.name}"> </span>
         <br>
         投稿内容：<span th:text="${article.content}"> </span>
+        
+        <br>
+        <br>
+
+        <form th:action="@{Article/delete}" method="post">
+            <input type="hidden" name="id" th:value="${article.id}">
+            <input type="hidden" name="articleId" th:value="${article.id}">
+            <button>記事削除</button>
+        </form>
 
         <br>
 
