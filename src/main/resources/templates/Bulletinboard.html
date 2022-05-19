@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
 
     <form th:action="@{Article/insert}" method="post">
@@ -17,18 +18,39 @@
         <br>
         <button>記事投稿</button>
     </form>
-    
+
     <hr>
     <div th:each="article:${application.articleList}"> <br>
-		投稿者名：<span th:text="${article.name}"> </span>
-		<br>
-		投稿内容：<span th:text="${article.content}"> </span>
+        投稿者名：<span th:text="${article.name}"> </span>
+        <br>
+        投稿内容：<span th:text="${article.content}"> </span>
+
+        <br>
+
+        <div th:each="comment:${article.commentList}"> <br>
+            コメント者名：<span th:text="${comment.name}"> </span>
+            <br>
+            コメント内容：<span th:text="${comment.content}"> </span>
+            
+        <br>
+        </div>
+        <br>
+
+        <form th:action="@{Article/insertcomment}" method="post">
+
+            名前：<input type="text" name="name"> <br>
+            コメント：<textarea name="content" cols="25" rows="5"> </textarea>
+            <br>
+            <input type="hidden" name="articleId" th:value="${article.id}">
+            <button>コメント投稿</button>
+        </form>
+
+        <hr>
+
     </div>
-
-
-
-
-
     
+
+
 </body>
+
 </html>
