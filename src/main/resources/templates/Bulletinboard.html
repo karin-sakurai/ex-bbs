@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <form th:action="@{Article/insert}" method="post">
+
+        投稿者名：<input type="text" name="name"> <br>
+        <br>
+        投稿内容：<textarea name="content" cols="25" rows="5"> </textarea>
+        <br>
+        <button>記事投稿</button>
+    </form>
+    
+    <hr>
+    <div th:each="article:${application.articleList}"> <br>
+		投稿者名：<span th:text="${article.name}"> </span>
+		<br>
+		投稿内容：<span th:text="${article.content}"> </span>
+    </div>
+
+
+
+
+
+    
+</body>
+</html>
