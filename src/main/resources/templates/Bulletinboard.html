@@ -10,17 +10,18 @@
 
 <body>
 
-    <form th:action="@{Article/insert}" method="post">
+    <form th:action="@{Article/insert}" method="post" th:object="${articleForm}">
 
-        投稿者名：<input type="text" name="name"> <br>
+        <div th:errors="*{name}" style="color:red">エラー</div>
+        投稿者名：<input type="text" name="name" th:field="*{name}"> <br>
         <br>
-        投稿内容：<textarea name="content" cols="25" rows="5"> </textarea>
+        <div th:errors="*{content}" style="color:red">エラー</div>
+        投稿内容：<textarea name="content" cols="25" rows="5" th:field="*{content}"> </textarea>
         <br>
         <button>記事投稿</button>
     </form>
 
     <hr>
-
 
     <div th:each="article:${application.articleList}"> <br>
         投稿者名：<span th:text="${article.name}"> </span>
@@ -47,10 +48,13 @@
         </div>
         <br>
 
-        <form th:action="@{Article/insertcomment}" method="post">
+        <form th:action="@{Article/insertcomment}" method="post" th:object="${commentForm}" >
 
-            名前：<input type="text" name="name"> <br>
-            コメント：<textarea name="content" cols="25" rows="5"> </textarea>
+            <div th:errors="*{name}" name="name" style="color:red" th:if="*{articleId} == ${article.id}">エラー</div>
+            名前：<input type="text" name="name" th:field="*{name}">
+             <br>
+            <div th:errors="*{content}" name="content" style="color:red" th:if="*{articleId} == ${article.id}">エラー</div>
+            コメント：<textarea name="content" cols="25" rows="5" th:field="*{content}"> </textarea>
             <br>
             <input type="hidden" name="articleId" th:value="${article.id}">
             <button>コメント投稿</button>
