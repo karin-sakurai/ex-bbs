@@ -4,8 +4,11 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -49,14 +52,29 @@ public class ArticleController {
 
 //	記事投稿を行うメソッド
 	@RequestMapping("insert")
-	public String insertArticle(Article article) {
+	public String insertArticle(@Validated ArticleForm articleform, BindingResult result) {
+
+		if (result.hasErrors()) {
+			return index();
+		}
+		Article article = new Article();
+		BeanUtils.copyProperties(articleform, article);
 		repository.insert(article);
 		return "redirect:/Article/";
 	}
 
-//	コメントを投稿、表示するメソッド
+//	コメントを投稿するメソッド
 	@RequestMapping("insertcomment")
-	public String insertComment(Comment comment, Integer id) {
+	public String insertComment(@Validated CommentForm commentform, BindingResult result) {
+
+		if (result.hasErrors()) {
+			return index();
+		}
+		Comment comment = new Comment();
+
+		comment.setArticleId(Integer.parseInt(commentform.getArticleId()));
+
+		BeanUtils.copyProperties(commentform, comment);
 		commentRepository.insert(comment);
 		return "redirect:/Article/";
 	}
