@@ -20,6 +20,8 @@
     </form>
 
     <hr>
+
+
     <div th:each="article:${application.articleList}"> <br>
         投稿者名：<span th:text="${article.name}"> </span>
         <br>
@@ -55,7 +57,6 @@
         </form>
 
         <hr>
-
     </div>
     
 

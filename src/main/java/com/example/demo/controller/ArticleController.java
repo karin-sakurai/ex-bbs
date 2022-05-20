@@ -44,11 +44,6 @@ public class ArticleController {
 	public String index() {
 		List<Article> articleList = repository.findAll();
 		application.setAttribute("articleList", articleList);
-
-		for (Article article : articleList) {
-			List<Comment> commentList = commentRepository.findByArticleId(article.getId());
-			article.setCommentList(commentList);
-		}
 		return "Bulletinboard"; // HTML
 	}
 
@@ -73,5 +68,6 @@ public class ArticleController {
 		repository.deleteById(id);
 		return "redirect:/Article/";
 	}
+
 
 }
